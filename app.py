@@ -34,7 +34,9 @@ def main():
         if args.action == "4":
             low_date = arrow.get(Config.LOW_DATE, Config.DATASET_DATE_FORMAT)
             high_date = arrow.get(Config.HIGH_DATE, Config.DATASET_DATE_FORMAT)
-            results = mast_helper.list_by_lease_start_date(csv_rows=csv_rows, low_date=low_date, high_date=high_date)
+            results = mast_helper.list_by_lease_start_date(
+                csv_rows=csv_rows, low_date=low_date, high_date=high_date
+            )
     except Exception as e:
         logger.exception(e)
 

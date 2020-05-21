@@ -79,7 +79,9 @@ class TestMastHelper:
         high_date = arrow.get(Config.HIGH_DATE, Config.DATASET_DATE_FORMAT)
 
         # WHEN
-        results = mast_helper.list_by_lease_start_date(csv_rows=csv_rows, low_date=low_date, high_date=high_date)
+        results = mast_helper.list_by_lease_start_date(
+            csv_rows=csv_rows, low_date=low_date, high_date=high_date
+        )
         # Are the dates in the correct format?
         required_date_format = re.compile(r"^\d{2}[/]\d{2}[/]\d{4}$")
 
