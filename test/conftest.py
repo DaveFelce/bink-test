@@ -31,7 +31,7 @@ def csv_rows():
         {"Property Name": "Seacroft Gate (Chase) - Block 2", "Property Address [1]": "Telecomms Apparatus",
          "Property  Address [2]": "Leeds", "Property Address [3]": "", "Property Address [4]": "LS14",
          "Unit Name": "Seacroft Gate (Chase) - Block 2, WYK 0414",
-         "Tenant Name": "Hutchinson3G Uk Ltd&Everything Everywhere Ltd", "Lease Start Date": "21 Aug 2007",
+         "Tenant Name": "Hutchinson3G Uk Ltd&Everything Everywhere Ltd", "Lease Start Date": "21 Sep 2007",
          "Lease End Date": "20 Aug 2032", "Lease Years": 25, "Current Rent": 12750.0},
     ]
 

@@ -1,6 +1,10 @@
 from collections import Counter
 from typing import Dict, List
 
+import arrow
+from arrow import Arrow
+from config import Config
+
 
 class MastHelper:
     """
@@ -27,7 +31,7 @@ class MastHelper:
         """
         From the list of all mast data, create a new list of mast data with “Lease Years” = 25 years.
         a. Output the list to the console, including all data fields
-        b. Output the total rent for all items in this list to the console
+        b. Output the total rent for all items in this list
 
         :param csv_rows: List of mast dataset records keyed on column headings
         :return: Dict of a list of records matching the lease years and the total rent for this list
@@ -38,10 +42,7 @@ class MastHelper:
         for record in by_lease_years:
             total_rent += record["Current Rent"]
 
-        return_val = {
-           "by_lease_years": by_lease_years,
-           "total_rent": total_rent
-        }
+        return_val = {"by_lease_years": by_lease_years, "total_rent": total_rent}
 
         return return_val
 
@@ -49,7 +50,7 @@ class MastHelper:
     def count_of_masts(csv_rows: List) -> Dict:
         """
         Create a dictionary containing tenant name and a count of masts for each tenant
-        a. Output the dictionary to the console in a readable form
+        a. Output the dictionary
 
         :param csv_rows: List of mast dataset records keyed on column headings
         :return: Dict of tenant names/masts for those tenants
@@ -66,3 +67,39 @@ class MastHelper:
 
         return mast_count
 
+    @staticmethod
+    def list_by_lease_start_date(
+        csv_rows: List, low_date: Arrow, high_date: Arrow
+    ) -> List:
+        """
+        List the data for rentals with "Lease Start Date" between 1st June 1999 and 31st August 2007
+        a. Output the data with dates formatted as DD/MM/YYYY
+
+        :param csv_rows: List of mast dataset records keyed on column headings
+        :param low_date: instance of arrow with start date
+        :param high_date: instance of arrow with end date
+        :return: List of records matching criteria
+        """
+
+        matched_records = []
+        for record in csv_rows:
+            lease_start_date = arrow.get(
+                record["Lease Start Date"], Config.DATASET_DATE_FORMAT
+            )
+
+            # Is this record's lease start date between the low and high ends of the date range?
+            start_date_in_range = low_date < lease_start_date < high_date
+            if start_date_in_range:
+                lease_end_date = arrow.get(
+                    record["Lease End Date"], Config.DATASET_DATE_FORMAT
+                )
+                # Re-format the dates
+                record["Lease Start Date"] = lease_start_date.format(
+                    Config.DATE_OUTPUT_FORMAT
+                )
+                record["Lease End Date"] = lease_end_date.format(
+                    Config.DATE_OUTPUT_FORMAT
+                )
+                matched_records.append(record)
+
+        return matched_records

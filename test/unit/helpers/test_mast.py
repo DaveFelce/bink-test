@@ -1,3 +1,7 @@
+import re
+
+import arrow
+from config import Config
 from helpers.mast import MastHelper
 
 
@@ -61,3 +65,27 @@ class TestMastHelper:
         assert results["Vodafone Ltd"] == 2
         assert results["O2 (UK) Ltd"] == 1
         assert results["Hutchinson3G Uk Ltd&Everything Everywhere Ltd"] == 1
+
+    def test_list_by_lease_start_date(self, csv_rows):
+        """
+        Test that listing by lease start dates meet the criteria:
+        List the data for rentals with "Lease Start Date" between 1st June 1999 and 31st August 2007
+        with dates formatted as DD/MM/YYYY
+        """
+
+        # GIVEN
+        mast_helper = MastHelper()
+        low_date = arrow.get(Config.LOW_DATE, Config.DATASET_DATE_FORMAT)
+        high_date = arrow.get(Config.HIGH_DATE, Config.DATASET_DATE_FORMAT)
+
+        # WHEN
+        results = mast_helper.list_by_lease_start_date(csv_rows=csv_rows, low_date=low_date, high_date=high_date)
+        # Are the dates in the correct format?
+        required_date_format = re.compile(r"^\d{2}[/]\d{2}[/]\d{4}$")
+
+        # THEN
+        assert len(results) == 4
+        assert required_date_format.search(results[0]["Lease Start Date"])
+        assert required_date_format.search(results[0]["Lease End Date"])
+        assert required_date_format.search(results[3]["Lease Start Date"])
+        assert required_date_format.search(results[3]["Lease End Date"])

@@ -9,6 +9,8 @@ verify_ssl = true
 argparse = "*"
 pandas = "*"
 pytest = "*"
+arrow = "*"
+pytest-sugar = "*"
 
 [requires]
 python_version = "3.8"
