@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 
 class MastHelper:
@@ -20,7 +20,7 @@ class MastHelper:
         return by_current_rent
 
     @staticmethod
-    def list_by_lease_years(csv_rows: List) -> List:
+    def list_by_lease_years(csv_rows: List) -> Dict:
         """
         From the list of all mast data, create a new list of mast data with “Lease Years” = 25 years.
         a. Output the list to the console, including all data fields
@@ -29,5 +29,13 @@ class MastHelper:
         """
         # Sort by Current Rent and take the top 5 records
         by_lease_years = list(filter(lambda x: x["Lease Years"] == 25, csv_rows))
+        total_rent = 0
+        for record in by_lease_years:
+            total_rent += record["Current Rent"]
 
-        return by_lease_years
+        return_val = {
+           "by_lease_years": by_lease_years,
+           "total_rent": total_rent
+        }
+
+        return return_val
