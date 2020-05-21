@@ -58,7 +58,8 @@ class MastHelper:
 
         mast_count = Counter()
         tenant_names = [x["Tenant Name"] for x in csv_rows]
-        # Get a count of duplicate tenant names and therefore how many masts they have (assuming 1 record == 1 mast)
+        # Get a count of duplicate tenant names and therefore how many masts they have
+        # (assuming 1 record == 1 mast)
         for tenant_name in tenant_names:
             mast_count[tenant_name] += 1
 

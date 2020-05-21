@@ -50,7 +50,7 @@ class TestMastHelper:
 
     def test_count_of_masts(self, csv_rows):
         """
-        Test the lease years listing meets the criteria:
+        Test the mast count functionality meets the criteria:
         Create a dictionary containing tenant name and a count of masts for each tenant
         """
 
