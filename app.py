@@ -2,22 +2,8 @@ import argparse
 import pprint
 
 from config import Config
+from helpers.mast import MastHelper
 from services.files import FileService
-
-
-def list_by_current_rent():
-    """
-    Read in the CSV dataset file
-    a. Produce a list sorted by "Current Rent" in ascending order
-    b. Obtain the first 5 items from the resultant list and output to the console
-    :return:
-    """
-    file_service = FileService()
-    csv_rows = file_service.get_csv_rows(csv_filepath=Config.DATASET_CSV)
-    # Sort by Current Rent and take the top 5 records
-    by_current_rent = sorted(csv_rows, key=lambda x: x["Current Rent"])[:5]
-
-    return by_current_rent
 
 
 def main():
@@ -29,9 +15,15 @@ def main():
     )
     args = parser.parse_args()
 
+    file_service = FileService()
+    mast_helper = MastHelper()
     results = None
+    # Load the dataset to work on
+    csv_rows = file_service.get_csv_rows(csv_filepath=Config.DATASET_CSV)
     if args.action == "1":
-        results = list_by_current_rent()
+        results = mast_helper.list_by_current_rent(csv_rows=csv_rows)
+    if args.action == "2":
+        results = mast_helper.list_by_lease_years(csv_rows=csv_rows)
 
     pprint.pprint(results)
 
