@@ -4,7 +4,8 @@ from helpers.mast import MastHelper
 class TestMastHelper:
     def test_list_by_current_rent(self, csv_rows):
         """
-        Test the current rent listing meets the criteria
+        Test the current rent listing meets the criteria:
+        5 records sorted ASC on current rent
         """
 
         # GIVEN
@@ -42,3 +43,21 @@ class TestMastHelper:
         assert by_lease_years[0]["Lease Years"] == 25
         assert by_lease_years[3]["Lease Years"] == 25
         assert total_rent == 46500.0
+
+    def test_count_of_masts(self, csv_rows):
+        """
+        Test the lease years listing meets the criteria:
+        Create a dictionary containing tenant name and a count of masts for each tenant
+        """
+
+        # GIVEN
+        mast_helper = MastHelper()
+
+        # WHEN
+        results = mast_helper.count_of_masts(csv_rows=csv_rows)
+
+        # THEN
+        assert results["Arqiva Services ltd"] == 2
+        assert results["Vodafone Ltd"] == 2
+        assert results["O2 (UK) Ltd"] == 1
+        assert results["Hutchinson3G Uk Ltd&Everything Everywhere Ltd"] == 1
