@@ -28,7 +28,7 @@ def main():
         if args.action == "1":
             results = mast_helper.list_by_current_rent(csv_rows=csv_rows)
         if args.action == "2":
-            results = mast_helper.list_by_lease_years(csv_rows=csv_rows)
+            results = mast_helper.list_by_lease_years(csv_rows=csv_rows, years_to_match=25)
         if args.action == "3":
             results = mast_helper.count_of_masts(csv_rows=csv_rows)
         if args.action == "4":

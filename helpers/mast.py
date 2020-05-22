@@ -27,17 +27,18 @@ class MastHelper:
         return by_current_rent
 
     @staticmethod
-    def list_by_lease_years(csv_rows: List) -> Dict:
+    def list_by_lease_years(csv_rows: List, years_to_match: int) -> Dict:
         """
         From the list of all mast data, create a new list of mast data with “Lease Years” = 25 years.
         a. Output the list to the console, including all data fields
         b. Output the total rent for all items in this list
 
         :param csv_rows: List of mast dataset records keyed on column headings
+        :param years_to_match: Number of years we want to match lease years to
         :return: Dict of a list of records matching the lease years and the total rent for this list
         """
         # Sort by Current Rent and take the top 5 records
-        by_lease_years = list(filter(lambda x: x["Lease Years"] == 25, csv_rows))
+        by_lease_years = list(filter(lambda x: x["Lease Years"] == years_to_match, csv_rows))
         total_rent = 0
         for record in by_lease_years:
             total_rent += record["Current Rent"]
