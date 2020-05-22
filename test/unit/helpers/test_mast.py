@@ -38,7 +38,7 @@ class TestMastHelper:
         mast_helper = MastHelper()
 
         # WHEN
-        results = mast_helper.list_by_lease_years(csv_rows=csv_rows)
+        results = mast_helper.list_by_lease_years(csv_rows=csv_rows, years_to_match=25)
         by_lease_years = results["by_lease_years"]
         total_rent = results["total_rent"]
 
